@@ -47,7 +47,7 @@ func main() {
 	asJson, err := json.MarshalIndent(records, "", "\t")
 	common.CheckError(err)
 
-	dir := fmt.Sprintf("./%s", fname)
+	dir := common.GetDefaultFilepath(fname)
 	fmt.Println(dir)
 	err = os.WriteFile(dir, asJson, 0644)
 	common.CheckError(err)

@@ -33,9 +33,9 @@ func main() {
 		os.Exit(0)
 	}
 
-	fname := os.Args[1]
-	if !common.CheckFile(fname) {
-		fmt.Fprintf(os.Stderr, "Cannot find file given '%s'\n", fname)
+	fpath := common.GetDefaultFilepath(os.Args[1])
+	if !common.CheckFile(fpath) {
+		fmt.Fprintf(os.Stderr, "Cannot find file given '%s'\n", os.Args[1])
 		os.Exit(0)
 	}
 
@@ -44,11 +44,11 @@ func main() {
 
 	// load the file
 	// Open our jsonFile
-	jsonFile, err := os.Open(fname)
+	jsonFile, err := os.Open(fpath)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println("Successfully Opened users.json")
+	fmt.Println("Successfully opened users.json")
 	// defer the closing of our jsonFile so that we can parse it later on
 	defer jsonFile.Close()
 }
