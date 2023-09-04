@@ -1,4 +1,4 @@
-package ex16b
+package xkcd
 
 type Record struct {
 	URL        string

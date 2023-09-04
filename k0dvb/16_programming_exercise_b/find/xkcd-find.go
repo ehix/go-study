@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	common "ex16b/common"
+	common "xkcd/common"
 )
 
 func removeDuplicateStr(strSlice []string) []string {

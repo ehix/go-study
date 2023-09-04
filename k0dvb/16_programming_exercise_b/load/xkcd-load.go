@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"os"
 
-	common "ex16b/common"
-	model "ex16b/model"
+	common "xkcd/common"
+	model "xkcd/model"
 )
 
 func createUrl(n int) string {

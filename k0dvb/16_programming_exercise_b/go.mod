@@ -1,3 +1,3 @@
-module ex16b
+module xkcd
 
 go 1.21.0

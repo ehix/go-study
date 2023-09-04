@@ -1,4 +1,4 @@
-package ex16b
+package xkcd
 
 import (
 	"fmt"
