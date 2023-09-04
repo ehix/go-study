@@ -1,7 +1,11 @@
 # Exercise B
+[Video](https://www.youtube.com/watch?v=mFB6_sOiggI&list=PLoILbKo9rG3skRCj37Kn5Zj803hhiuRK6&index=18)
 
 ### Problem:
 Exercise 4.12 from GOPL: fetching from the web
+
+[Solution](https://github.com/matt4biz/go-class-exer-4.12)
+
 - The popular web comic "xkcd" has a JSON interface.
 - A request to https://xkcd.com/571/info.0.json produces a detailed description of comic 571.
 - Download each URL once, and build an offline index.
