@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 
 	common "xkcd/common"
 	model "xkcd/model"
@@ -23,24 +24,28 @@ func main() {
 
 	flag.Parse()
 
+	// Default stopping criteria, two 404s in a row will terminate the loop.
+	var notFound int
 	var records []model.Record
-	for i := 0; i < limit; i++ {
+	for i := 0; i < limit && notFound < 2; i++ {
 		url := createUrl(i)
 		resp, err := http.Get(url)
 		common.CheckError(err)
 
 		if resp.StatusCode != http.StatusOK {
 			fmt.Fprintf(os.Stderr, "skipping %v: got %v\n", i, resp.StatusCode)
+			notFound++
 			continue
 		}
 		var r model.Record
-		r.URL = url
+		r.URL = strings.TrimSuffix(url, "info.0.json")
 
 		err = json.NewDecoder(resp.Body).Decode(&r)
 		common.CheckError(err)
 
 		// fmt.Printf("%d: %#v\n", i, r)
 		resp.Body.Close()
+		notFound = 0
 		records = append(records, r)
 	}
 

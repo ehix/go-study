@@ -40,21 +40,13 @@ func sanitiseString(str string) string {
 	// Make new lines spaces
 	str = regexp.MustCompile(`\r?\n`).ReplaceAllString(str, " ")
 	// Remove "alt/Alt: "
-	str = regexp.MustCompile(`[A|a]lt[:|-]`).ReplaceAllString(str, "")
+	str = regexp.MustCompile(`[A|a]lt[: |-]`).ReplaceAllString(str, "")
 	// Remove remaining punctuation
 	str = regexp.MustCompile(`[^a-zA-Z0-9 ]+`).ReplaceAllString(str, "")
 	return strings.ToLower(str)
 }
 
 func main() {
-	// <!> sort out arg validation:
-	// largs := len(os.Args)
-	// switch largs {
-	// case largs < 2:
-	// 	fmt.Fprintln("Requires filename and search terms be passed")
-	// case largs < 3:
-	// }
-
 	if len(os.Args) < 3 {
 		fmt.Fprintln(os.Stdout, "No search terms passed")
 		os.Exit(0)
@@ -68,27 +60,21 @@ func main() {
 
 	// Remove any duplicate search terms passed
 	terms := removeDuplicateStr(os.Args[2:])
-
+	// Load the JSON file a decode the contents into Record structs
 	records := getRecords(fpath)
-
-	var return_records model.Records
+	// Find the terms within either the title or transcript
+	var count int
+outer:
 	for _, r := range records {
-
-		words := make(map[string]int)
-		for _, word := range strings.Fields(sanitiseString(r.Transcript)) {
-			words[word]++
-		}
-
+		title := sanitiseString(r.Title)
+		transcript := sanitiseString(r.Transcript)
 		for _, term := range terms {
-			_, ok := words[term]
-			if ok {
-				return_records.AddRecord(r)
-				break
+			if !(strings.Contains(title, term) || strings.Contains(transcript, term)) {
+				continue outer
 			}
 		}
+		count++
+		fmt.Printf("%v %v/%v/%4v '%v'\n", r.URL, r.Day, r.Month, r.Year, r.Title)
 	}
-	fmt.Printf("found %d matches\n", len(return_records.Records))
-	for i, r := range return_records.Records {
-		fmt.Printf("%3d: %v, %2v/%v/%4v, %v\n", i+1, r.URL, r.Day, r.Month, r.Year, r.Title)
-	}
+	fmt.Printf("found %d matches\n", count)
 }
