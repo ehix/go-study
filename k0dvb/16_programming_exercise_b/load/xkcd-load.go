@@ -17,10 +17,12 @@ func createUrl(n int) string {
 
 func main() {
 	var fname string
+	var limit int
 	flag.StringVar(&fname, "f", common.DefaultFname, "Filename for JSON file output")
+	flag.IntVar(&limit, "l", 10, "Limit number of entries pulled from xkcd")
+
 	flag.Parse()
 
-	limit := 5
 	var records []model.Record
 	for i := 0; i < limit; i++ {
 		url := createUrl(i)
@@ -44,7 +46,8 @@ func main() {
 
 	fmt.Fprintf(os.Stdout, "read %d comics\n", len(records))
 
-	asJson, err := json.MarshalIndent(records, "", "\t")
+	toJson := model.Records{Records: records}
+	asJson, err := json.MarshalIndent(toJson, "", "\t")
 	common.CheckError(err)
 
 	dir := common.GetDefaultFilepath(fname)
