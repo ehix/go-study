@@ -192,4 +192,21 @@ Date: Thu, 14 Sep 2023 20:18:57 GMT
     "firstName": "John",
     "lastName": "Doe",
     "phoneNumber": "515-555-1234"
-}```
+}
+```
+```shell
+$ http :8080/services/628d26cb-2862-4cf7-b9d1-a078d1a38d6f
+HTTP/1.1 404 Not Found
+Content-Length: 65
+Content-Type: application/json; charset=UTF-8
+Date: Thu, 14 Sep 2023 22:10:57 GMT
+
+{
+    "Entity": "service",
+    "ID": "628d26cb-2862-4cf7-b9d1-a078d1a38d6f"
+}
+```
+
+
+## `Update`/PUT operations
+- PATCH will be similar process
