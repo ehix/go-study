@@ -7,7 +7,7 @@ package models
 // `gorm:"numeric" json:""`
 
 type Services struct {
-	ServiceID string  `json:"serviceID"`
+	ServiceID string  `gorm:"primaryKey" json:"serviceId"`
 	Name      string  `json:"name"`
 	Price     float32 `gorm:"numeric" json:"price"`
 }

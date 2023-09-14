@@ -7,7 +7,6 @@ import (
 )
 
 func (s *EchoServer) GetAllServices(ctx echo.Context) error {
-	// vendorID := ctx.QueryParam("vendorId")
 	products, err := s.DB.GetAllServices(ctx.Request().Context())
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, err)
