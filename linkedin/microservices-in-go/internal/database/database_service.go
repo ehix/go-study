@@ -10,14 +10,14 @@ import (
 	"gorm.io/gorm"
 )
 
-func (c Client) GetAllServices(ctx context.Context) ([]models.Services, error) {
-	var services []models.Services
+func (c Client) GetAllServices(ctx context.Context) ([]models.Service, error) {
+	var services []models.Service
 	result := c.DB.WithContext(ctx).Find(&services)
 	// if you don't have an email, don't use it in the where clause, i.e. filter out.
 	return services, result.Error
 }
 
-func (c Client) AddService(ctx context.Context, service *models.Services) (*models.Services, error) {
+func (c Client) AddService(ctx context.Context, service *models.Service) (*models.Service, error) {
 	service.ServiceID = uuid.NewString()
 	result := c.DB.WithContext(ctx).Create(&service)
 	if result.Error != nil {
@@ -29,9 +29,9 @@ func (c Client) AddService(ctx context.Context, service *models.Services) (*mode
 	return service, nil
 }
 
-func (c Client) GetServiceById(ctx context.Context, ID string) (*models.Services, error) {
-	service := &models.Services{}
-	result := c.DB.WithContext(ctx).Where(&models.Services{ServiceID: ID}).First((&service))
+func (c Client) GetServiceById(ctx context.Context, ID string) (*models.Service, error) {
+	service := &models.Service{}
+	result := c.DB.WithContext(ctx).Where(&models.Service{ServiceID: ID}).First((&service))
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, &dberrors.NotFoundError{Entity: "service", ID: ID}

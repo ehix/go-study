@@ -45,7 +45,6 @@ func (s *EchoServer) GetCustomerById(ctx echo.Context) error {
 		switch err.(type) {
 		case *dberrors.NotFoundError:
 			return ctx.JSON(http.StatusNotFound, err)
-
 		default:
 			return ctx.JSON(http.StatusInternalServerError, err)
 		}

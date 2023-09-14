@@ -18,7 +18,7 @@ func (s *EchoServer) GetAllProducts(ctx echo.Context) error {
 }
 
 func (s *EchoServer) AddProduct(ctx echo.Context) error {
-	product := new(models.Products)
+	product := new(models.Product)
 	if err := ctx.Bind(product); err != nil {
 		return ctx.JSON(http.StatusUnsupportedMediaType, err)
 	}

@@ -10,15 +10,15 @@ import (
 	"gorm.io/gorm"
 )
 
-func (c Client) GetAllProducts(ctx context.Context, vendorId string) ([]models.Products, error) {
-	var products []models.Products
+func (c Client) GetAllProducts(ctx context.Context, vendorId string) ([]models.Product, error) {
+	var products []models.Product
 	// Pass ctx bc allows data pass to write handlers in gorm to do specific things.
-	result := c.DB.WithContext(ctx).Where(models.Products{VendorID: vendorId}).Find(&products)
+	result := c.DB.WithContext(ctx).Where(models.Product{VendorID: vendorId}).Find(&products)
 	// if you don't have an email, don't use it in the where clause, i.e. filter out.
 	return products, result.Error
 }
 
-func (c Client) AddProduct(ctx context.Context, product *models.Products) (*models.Products, error) {
+func (c Client) AddProduct(ctx context.Context, product *models.Product) (*models.Product, error) {
 	product.ProductID = uuid.NewString()
 	result := c.DB.WithContext(ctx).Create(&product)
 	if result.Error != nil {
@@ -30,9 +30,9 @@ func (c Client) AddProduct(ctx context.Context, product *models.Products) (*mode
 	return product, nil
 }
 
-func (c Client) GetProductById(ctx context.Context, ID string) (*models.Products, error) {
-	product := &models.Products{}
-	result := c.DB.WithContext(ctx).Where(&models.Products{ProductID: ID}).First((&product))
+func (c Client) GetProductById(ctx context.Context, ID string) (*models.Product, error) {
+	product := &models.Product{}
+	result := c.DB.WithContext(ctx).Where(&models.Product{ProductID: ID}).First((&product))
 	if result.Error != nil {
 		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return nil, &dberrors.NotFoundError{Entity: "product", ID: ID}

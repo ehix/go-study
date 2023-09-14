@@ -17,7 +17,7 @@ func (s *EchoServer) GetAllVendors(ctx echo.Context) error {
 }
 
 func (s *EchoServer) AddVendor(ctx echo.Context) error {
-	vendor := new(models.Vendors) // get a pointer to vendor
+	vendor := new(models.Vendor) // get a pointer to vendor
 	// built-in to bind a body to an object, checking if we can do it.
 	if err := ctx.Bind(vendor); err != nil {
 		return ctx.JSON(http.StatusUnsupportedMediaType, err)

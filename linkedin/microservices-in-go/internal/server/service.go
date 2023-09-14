@@ -17,7 +17,7 @@ func (s *EchoServer) GetAllServices(ctx echo.Context) error {
 }
 
 func (s *EchoServer) AddService(ctx echo.Context) error {
-	service := new(models.Services) // get a pointer to service
+	service := new(models.Service) // get a pointer to service
 	// built-in to bind a body to an object, checking if we can do it.
 	if err := ctx.Bind(service); err != nil {
 		return ctx.JSON(http.StatusUnsupportedMediaType, err)
