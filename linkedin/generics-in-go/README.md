@@ -251,7 +251,7 @@ func PrintSlice2[T Energy, S ~[]T](tt S) {
 Use `slices` for sorting, deleting, binary search, etc..
 ```go
 // Need to sort different energy options sorted by cost.
-func SortByCost[T Enery](a [T]){
+func SortByCost[T Energy](a [T]){
     // uses SortFunc from slices.
     slices.SortFunc(a, func(a, b T) bool {
         return a.Cost() < b.Cost() || math.IsNaN(a.Cost()) && !math.IsNan(b.Cost())
