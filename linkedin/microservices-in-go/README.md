@@ -103,8 +103,8 @@ Date: Thu, 14 Sep 2023 15:27:56 GMT
 ```
 
 ## `getAll` Operations
-- Now scaffolding complete, create a get all function that responds to a get request at the collection route url.
-- Test with:
+- Now scaffolding complete, create a get all function that responds to a get request at the collection route url (`/customers`).
+- Test all with:
 ```shell
 $ http :8080/customers
 
@@ -124,3 +124,30 @@ Transfer-Encoding: chunked
     },
 ...
 ```
+- Test email filter with:
+```shell
+$ http :8080/customers emailAddress=="enim.Mauris.quis@Vivamusnibh.net"
+
+HTTP/1.1 200 OK
+Content-Length: 233
+Content-Type: application/json; charset=UTF-8
+Date: Thu, 14 Sep 2023 15:57:35 GMT
+
+[
+    {
+        "address": "8 Delaware Hill, Garden Grove, CA 92844",
+        "customerID": "78542db1-1a3e-4e1f-9851-341e00c91738",
+        "emailAddress": "enim.Mauris.quis@Vivamusnibh.net",
+        "firstName": "Nicole",
+        "lastName": "Mcconnell",
+        "phoneNumber": "(892) 616-0264"
+    }
+]
+```
+## Add remaining GetAll methods:
+Steps:
+1. Add struct to new file under `models/` with json tags
+2. Add get func signatures to the `DatabaseClient` interface in `client.go`
+3. Add get func to new file under `database/`
+4. Add get func to new file under `server/`
+5. Add get func to `Server` interface in `server.go`, add routes to `registerRoutes`

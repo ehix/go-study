@@ -14,8 +14,11 @@ type Server interface {
 	// Have these on k8s
 	Readiness(ctx echo.Context) error
 	Liveness(ctx echo.Context) error
-	//
+	// Get all methods
 	GetAllCustomers(ctx echo.Context) error
+	GetAllProducts(ctx echo.Context) error
+	GetAllServices(ctx echo.Context) error
+	GetAllVendors(ctx echo.Context) error
 }
 
 type EchoServer struct {
@@ -51,6 +54,19 @@ func (s *EchoServer) registerRoutes() {
 	// create customer group
 	cg := s.echo.Group("/customers")
 	cg.GET("", s.GetAllCustomers)
+
+	// create product group
+	pg := s.echo.Group("/products")
+	pg.GET("", s.GetAllProducts)
+
+	// create services group
+	sg := s.echo.Group("/services")
+	sg.GET("", s.GetAllServices)
+
+	// create vendors group
+	vg := s.echo.Group("/vendors")
+	vg.GET("", s.GetAllVendors)
+
 }
 
 func (s *EchoServer) Readiness(ctx echo.Context) error {
