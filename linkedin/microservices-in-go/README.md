@@ -84,3 +84,43 @@ postgres=# select * from wisdom.customers limit 10;
 
 ## Set Up the Echo Client
 - Create webserver itself, wrapped in an interface.
+- [What is an Echo Server?](https://medium.com/@himalee.tailor/what-is-an-echoserver-b2bfd3b8deeb)
+
+## Wiring the Service
+- Have server wrapped and configure, and client ready.
+- Final piece of scaffolding, to allow us to implement the methods we need to for a functioning webservice.
+- Test that system is working with.. (downloaded `httpie` to do this `sudo apt install httpie`)
+```
+$ http :8080/readiness
+HTTP/1.1 200 OK
+Content-Length: 16
+Content-Type: application/json; charset=UTF-8
+Date: Thu, 14 Sep 2023 15:27:56 GMT
+
+{
+    "status": "OK"
+}
+```
+
+## `getAll` Operations
+- Now scaffolding complete, create a get all function that responds to a get request at the collection route url.
+- Test with:
+```shell
+$ http :8080/customers
+
+HTTP/1.1 200 OK
+Content-Type: application/json; charset=UTF-8
+Date: Thu, 14 Sep 2023 15:54:33 GMT
+Transfer-Encoding: chunked
+
+[
+    {
+        "address": "556 Lakewood Park, Bismarck, ND 58505",
+        "customerID": "8aa4b76a-f66c-4289-b7f6-59f24affe13d",
+        "emailAddress": "penatibus.et@lectusa.com",
+        "firstName": "Cally",
+        "lastName": "Reynolds",
+        "phoneNumber": "(901) 166-8355"
+    },
+...
+```

@@ -1,9 +1,11 @@
 package database
 
 import (
+	"context"
 	"fmt"
 	"time"
 
+	"github.com/ehix/go-microservices/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -11,6 +13,7 @@ import (
 
 type DatabaseClient interface {
 	Ready() bool
+	GetAllCustomers(ctx context.Context, emailAddress string) ([]models.Customer, error)
 }
 
 type Client struct {
@@ -19,7 +22,7 @@ type Client struct {
 
 func (c Client) Ready() bool {
 	var ready string
-	// open a transaction
+	// Open a transaction to see the database
 	tx := c.DB.Raw("SELECT 1 as ready").Scan(&ready)
 	if tx.Error != nil {
 		return false
