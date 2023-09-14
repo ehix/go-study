@@ -3,6 +3,8 @@ package server
 import (
 	"net/http"
 
+	"github.com/ehix/go-microservices/internal/database/dberrors"
+	"github.com/ehix/go-microservices/internal/models"
 	"github.com/labstack/echo/v4"
 )
 
@@ -13,4 +15,21 @@ func (s *EchoServer) GetAllProducts(ctx echo.Context) error {
 		return ctx.JSON(http.StatusInternalServerError, err)
 	}
 	return ctx.JSON(http.StatusOK, products)
+}
+
+func (s *EchoServer) AddProduct(ctx echo.Context) error {
+	product := new(models.Products)
+	if err := ctx.Bind(product); err != nil {
+		return ctx.JSON(http.StatusUnsupportedMediaType, err)
+	}
+	product, err := s.DB.AddProduct(ctx.Request().Context(), product)
+	if err != nil {
+		switch err.(type) {
+		case *dberrors.ConflictError:
+			return ctx.JSON(http.StatusConflict, err)
+		default:
+			return ctx.JSON(http.StatusInternalServerError, err)
+		}
+	}
+	return ctx.JSON(http.StatusCreated, product)
 }

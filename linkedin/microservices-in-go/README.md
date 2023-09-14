@@ -151,3 +151,28 @@ Steps:
 3. Add get func to new file under `database/`
 4. Add get func to new file under `server/`
 5. Add get func to `Server` interface in `server.go`, add routes to `registerRoutes`
+
+## `create` Operations
+1. create in `database/database_x.go`
+2. add func signature to `database/client.go` interface
+3. create func in `server/x.go`
+4. add func signature to `server/server.go` interface
+5. add POST method to group with route
+
+Example:
+```shell
+$ http POST :8080/customers firstName=John lastName=Doe emailAddress="jdoe@example.com" phoneNumber="515-555-1234" address="1234 Main St; Anytown, KS 66854"
+HTTP/1.1 201 Created
+Content-Length: 197
+Content-Type: application/json; charset=UTF-8
+Date: Thu, 14 Sep 2023 17:42:08 GMT
+
+{
+    "address": "1234 Main St; Anytown, KS 66854",
+    "customerID": "bac7e647-3d6d-4456-a92f-8d3497cbf7ae",
+    "emailAddress": "jdoe@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phoneNumber": "515-555-1234"
+}
+```

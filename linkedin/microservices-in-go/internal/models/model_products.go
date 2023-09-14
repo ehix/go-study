@@ -7,6 +7,6 @@ package models
 type Products struct {
 	ProductID string  `gorm:"primaryKey" json:"productId"`
 	Name      string  `json:"name"`
-	Price     float32 `gorm:"numeric" json:"price"`
-	VendorID  string  `json:"vendorID"`
+	Price     float32 `gorm:"type:numeric" json:"price,string"`
+	VendorID  string  `json:"vendorId"`
 }
