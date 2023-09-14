@@ -176,3 +176,20 @@ Date: Thu, 14 Sep 2023 17:42:08 GMT
     "phoneNumber": "515-555-1234"
 }
 ```
+
+## `GetOne` operations
+```shell
+$ http :8080/customers/a1c59a41-b6b3-40dd-8e6f-348ffe61ae0f
+HTTP/1.1 200 OK
+Content-Length: 197
+Content-Type: application/json; charset=UTF-8
+Date: Thu, 14 Sep 2023 20:18:57 GMT
+
+{ 
+    "address": "1234 Main St; Anytown, KS 66854",
+    "customerID": "a1c59a41-b6b3-40dd-8e6f-348ffe61ae0f",
+    "emailAddress": "jdoe@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "phoneNumber": "515-555-1234"
+}```

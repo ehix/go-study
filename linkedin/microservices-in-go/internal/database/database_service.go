@@ -28,3 +28,15 @@ func (c Client) AddService(ctx context.Context, service *models.Services) (*mode
 	}
 	return service, nil
 }
+
+func (c Client) GetServiceById(ctx context.Context, ID string) (*models.Services, error) {
+	service := &models.Services{}
+	result := c.DB.WithContext(ctx).Where(&models.Services{ServiceID: ID}).First((&service))
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return nil, &dberrors.NotFoundError{Entity: "service", ID: ID}
+		}
+		return nil, result.Error
+	}
+	return service, nil
+}

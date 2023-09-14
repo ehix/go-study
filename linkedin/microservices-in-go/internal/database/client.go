@@ -16,15 +16,19 @@ type DatabaseClient interface {
 
 	GetAllCustomers(ctx context.Context, emailAddress string) ([]models.Customer, error)
 	AddCustomer(ctx context.Context, customer *models.Customer) (*models.Customer, error)
+	GetCustomerById(ctx context.Context, ID string) (*models.Customer, error)
 
 	GetAllProducts(ctx context.Context, vendorId string) ([]models.Products, error)
 	AddProduct(ctx context.Context, product *models.Products) (*models.Products, error)
+	GetProductById(ctx context.Context, ID string) (*models.Products, error)
 
 	GetAllServices(ctx context.Context) ([]models.Services, error)
 	AddService(ctx context.Context, service *models.Services) (*models.Services, error)
+	GetServiceById(ctx context.Context, ID string) (*models.Services, error)
 
 	GetAllVendors(ctx context.Context) ([]models.Vendors, error)
 	AddVendor(ctx context.Context, vendor *models.Vendors) (*models.Vendors, error)
+	GetVendorById(ctx context.Context, ID string) (*models.Vendors, error)
 }
 
 type Client struct {
