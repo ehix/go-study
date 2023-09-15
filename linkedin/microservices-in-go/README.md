@@ -146,13 +146,13 @@ Date: Thu, 14 Sep 2023 15:57:35 GMT
 ```
 ## Add remaining GetAll methods:
 Steps:
-1. Add struct to new file under `models/` with json tags
-2. Add get func signatures to the `DatabaseClient` interface in `client.go`
-3. Add get func to new file under `database/`
-4. Add get func to new file under `server/`
-5. Add get func to `Server` interface in `server.go`, add routes to `registerRoutes`
+1. Add `struct` to new file under `models/` with json tags
+2. Add get `func` signatures to the `DatabaseClient` interface in `client.go`
+3. Add get `func` to new file under `database/`
+4. Add get `func` to new file under `server/`
+5. Add get `func` to `Server` interface in `server.go`, add routes to `registerRoutes`
 
-## `create` Operations
+## Create Operations
 1. create in `database/database_x.go`
 2. add func signature to `database/client.go` interface
 3. create func in `server/x.go`
@@ -177,7 +177,7 @@ Date: Thu, 14 Sep 2023 17:42:08 GMT
 }
 ```
 
-## `GetOne` operations
+## GetOne operations
 ```shell
 $ http :8080/customers/a1c59a41-b6b3-40dd-8e6f-348ffe61ae0f
 HTTP/1.1 200 OK
@@ -208,5 +208,7 @@ Date: Thu, 14 Sep 2023 22:10:57 GMT
 ```
 
 
-## `Update`/PUT operations
+## Update/PUT operations
 - PATCH will be similar process
+
+## Delete operations

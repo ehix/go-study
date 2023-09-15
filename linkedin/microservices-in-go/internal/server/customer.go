@@ -74,3 +74,13 @@ func (s *EchoServer) UpdateCustomer(ctx echo.Context) error {
 	}
 	return ctx.JSON(http.StatusOK, customer)
 }
+
+func (s *EchoServer) DeleteCustomer(ctx echo.Context) error {
+	// Could possibly return a 404 instead here if doesn't exist.
+	ID := ctx.Param("id")
+	err := s.DB.DeleteCustomer(ctx.Request().Context(), ID)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, err)
+	}
+	return ctx.NoContent(http.StatusResetContent)
+}

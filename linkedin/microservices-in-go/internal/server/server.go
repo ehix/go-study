@@ -19,21 +19,25 @@ type Server interface {
 	AddCustomer(ctx echo.Context) error
 	GetCustomerById(ctx echo.Context) error
 	UpdateCustomer(ctx echo.Context) error
+	DeleteCustomer(ctx echo.Context) error
 
 	GetAllProducts(ctx echo.Context) error
 	AddProduct(ctx echo.Context) error
 	GetProductById(ctx echo.Context) error
 	UpdateProduct(ctx echo.Context) error
+	DeleteProduct(ctx echo.Context) error
 
 	GetAllServices(ctx echo.Context) error
 	AddService(ctx echo.Context) error
 	GetServiceById(ctx echo.Context) error
 	UpdateService(ctx echo.Context) error
+	DeleteService(ctx echo.Context) error
 
 	GetAllVendors(ctx echo.Context) error
 	AddVendor(ctx echo.Context) error
 	GetVendorById(ctx echo.Context) error
 	UpdateVendor(ctx echo.Context) error
+	DeleteVendor(ctx echo.Context) error
 }
 
 type EchoServer struct {
@@ -66,34 +70,37 @@ func (s *EchoServer) registerRoutes() {
 	s.echo.GET("/readiness", s.Readiness)
 	s.echo.GET("/liveness", s.Liveness)
 
-	// create customer group
+	// customer group
 	cg := s.echo.Group("/customers")
 	cg.GET("", s.GetAllCustomers)
 	cg.POST("", s.AddCustomer)
 	cg.GET("/:id", s.GetCustomerById)
 	cg.PUT("/:id", s.UpdateCustomer)
+	cg.DELETE("/:id", s.DeleteCustomer)
 
-	// create product group
+	// product group
 	pg := s.echo.Group("/products")
 	pg.GET("", s.GetAllProducts)
 	pg.POST("", s.AddProduct)
 	pg.GET("/:id", s.GetProductById)
 	pg.PUT("/:id", s.UpdateProduct)
+	pg.DELETE("/:id", s.DeleteProduct)
 
-	// create services group
+	// service group
 	sg := s.echo.Group("/services")
 	sg.GET("", s.GetAllServices)
 	sg.POST("", s.AddService)
 	sg.GET("/:id", s.GetServiceById)
 	sg.PUT("/:id", s.UpdateService)
+	sg.DELETE("/:id", s.DeleteService)
 
-	// create vendors group
+	// vendor group
 	vg := s.echo.Group("/vendors")
 	vg.GET("", s.GetAllVendors)
 	vg.POST("", s.AddVendor)
 	vg.GET("/:id", s.GetVendorById)
 	vg.PUT("/:id", s.UpdateVendor)
-
+	vg.DELETE("/:id", s.DeleteVendor)
 }
 
 func (s *EchoServer) Readiness(ctx echo.Context) error {
