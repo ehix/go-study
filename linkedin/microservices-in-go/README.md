@@ -2,10 +2,16 @@
 
 [Course](https://www.linkedin.com/learning/build-a-microservice-with-go)
 
+## Recap
+- Built a database client with GORM as a ORM, to connect to an active Prosgres DB.
+- Built a server client with echo framework for http req/resp, wired five standard REST methods, consistently over four different DB domains.
+- Built and test with a Docker image.
+- Discussed middleware and testing strategies.
+
 ## What you need to know/tooling
 
 - Go
-  - focusing on abstractions rather than the language, i.e. it's not optimised or will use proper code style.
+  - focusing on abstractions rather than the language, i.e. it's not optimized or will use proper code style.
   - Go 1.20
   - GOPATH setup
 
@@ -212,3 +218,58 @@ Date: Thu, 14 Sep 2023 22:10:57 GMT
 - PATCH will be similar process
 
 ## Delete operations
+- See code for examples
+
+## Building a Dockerfile
+- Often building applications that target k8s
+- This is a strategy to do so, using layering to ensure to we have quick CI/CD builds.
+  - Layers tend to have consistent patterns which allow quick image creation.
+- Cannot test from local machine/localhost, we're not building a bridge network.
+- Need to dig into docker networking/compose to achieve this.
+- Could modify database client to work with env variables, then pass the container DNS name of the DB.
+- Or, we could use internal docker DNS instead of localhost; apparently outside scope of course
+
+1. `sudo docker build -t wisdom .`
+   - The layers prevent previous build steps from running again if there's no changes. 
+2. `docker run -d --rm --network host --name widsom-app widsom`
+   - This will produce a connection error when queried, as the network host is listed, meaning docker is using our network.
+   - It doesn't expose this bc we can't expose a port and run network host.
+   - `naming to docker.io/library/wisdom`
+3. `docker exec -i wisdom-app /bin/sh`
+
+
+## Echo Middleware
+### What is MW in Echo?
+- A `HandlerFunction` that accepts a `HandlerFunction`
+- A function that is chained in the HTTP req/resp path
+- Methods works with the Echo Context
+- Work between server edge and `HandlerFunction` defined in `registerRoutes`
+### Levels:
+- Root level before the router
+- Root level after the router
+- Can be defined at the group level or route level
+  - We could build MW that checks if admin perms before access
+### Prebuild MW:
+- Auth, JWT and basic
+- CORS cross origin req support
+- Compression
+- Logging
+- Throttling, control method calls in a given time, or clients over-using resources
+### Build your own:
+- Build or modify existing MW.
+
+## Testing Ideas
+### Data Layer:
+- The hardest place
+- Utilize live server
+- Spin up docker image for executing tests
+- go-sqlmock, injects into tests mock database calls
+### Weblayer
+- Mockery (go) for generation of mocks for all interfaces defined in code
+- Test using mocks
+- Echo test handler using mocks
+### Integration Testing
+- Improves CI/CD pipeline and confidence in code.
+- If private, deploy jobs in k8
+- Resty client, pref over built-in http client
+- Run them as separate processes against services
