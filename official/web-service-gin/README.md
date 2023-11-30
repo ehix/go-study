@@ -1,5 +1,7 @@
 # web-service-gin
 
+`go mod init example.com/web-service-gin`
+`go get .`
 `go run .` 
 
 GET /albums
